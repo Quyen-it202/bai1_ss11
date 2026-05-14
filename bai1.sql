@@ -65,15 +65,10 @@ drop procedure CancelAppointment;
 DELIMITER //
 create procedure CancelAppointment(IN p_appointment_id INT)
 	begin
-		if exists (select * from Appointments
-					where appointment_id = p_appointment_id)
-			then 
-				update Appointments
-				set status = 'Cancelled'
-				where appointment_id = p_appointment_id;
-		else
-			select 'Không tồn tại' error_mess;
-		end if;
+		UPDATE Appointments
+		SET status = 'Cancelled'
+		WHERE appointment_id = p_appointment_id 
+		AND status = 'Pending';
     end //
 
 DELIMITER ;
